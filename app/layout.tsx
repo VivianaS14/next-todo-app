@@ -2,6 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 
+import TaskProvider from "@context/TaskContext";
+
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-bricolage",
@@ -20,7 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={bricolage.className}>{children}</body>
+      <body className={bricolage.className}>
+        <TaskProvider>{children}</TaskProvider>
+      </body>
     </html>
   );
 }
