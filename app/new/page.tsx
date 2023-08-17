@@ -48,12 +48,15 @@ export default function NewPage({ paramId }: Props) {
   }, [paramId, tasks]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="bg-slate-900 w-80 p-4 my-6 rounded-md mx-auto flex flex-col"
+    >
       <input
         type="text"
         name="title"
         placeholder="Write a title"
-        className="text-black"
+        className="text-black bg-slate-300 py-2 px-4 mb-4 rounded-md outline-none"
         onChange={handleChange}
         value={task.title}
       />
@@ -62,11 +65,16 @@ export default function NewPage({ paramId }: Props) {
         placeholder="Write a description"
         cols={30}
         rows={10}
-        className="text-black"
+        className="text-black bg-slate-300 py-2 px-4 mb-4 rounded-md outline-none"
         onChange={handleChange}
         value={task.description}
       ></textarea>
-      <button type="submit">Save</button>
+      <button
+        type="submit"
+        className="bg-emerald-300 hover:bg-emerald-500 text-black px-4 py-1 rounded-md"
+      >
+        Save
+      </button>
     </form>
   );
 }
