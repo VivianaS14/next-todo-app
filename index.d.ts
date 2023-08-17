@@ -6,3 +6,8 @@ export type Task = {
 };
 
 export type TasksState = Task[];
+
+export type TaskAction = {
+  type: "add" | "remove";
+  task: Task;
+};
