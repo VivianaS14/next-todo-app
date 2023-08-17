@@ -58,7 +58,7 @@ export const useTasks = () => {
 
 // Reducer -> Actions
 function TaskReducers(state: TasksState, { type, task }: TaskAction) {
-  let existingTask = state[task.id];
+  const existingTask = state.find((tsk) => tsk.id === task.id);
 
   switch (type) {
     case "add":
@@ -69,14 +69,7 @@ function TaskReducers(state: TasksState, { type, task }: TaskAction) {
       return state;
 
     case "remove":
-      console.log({ task, state });
-      if (existingTask === undefined) {
-        return state;
-      }
-
-      const newState = [...state];
-      delete newState[task.id];
-      return newState;
+      return [...state].filter((tsk) => tsk.id !== task.id);
 
     default:
       throw new Error(`Unhandled action type: ${type}`);
