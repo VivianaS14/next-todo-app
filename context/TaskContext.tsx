@@ -1,25 +1,25 @@
 "use client";
-import React, { useContext } from "react";
-import { TasksState } from "..";
+import React, { Dispatch, useContext, useReducer } from "react";
+import { Task, TaskAction, TasksState } from "..";
 
 // Default state
 const defaultState = [
   {
     id: "101",
-    title: "My First Task",
-    description: "Some task description",
+    title: "My Task 1",
+    description: "Some description of task",
     status: false,
   },
   {
     id: "102",
-    title: "My Second Task",
-    description: "Some task description",
+    title: "My Task 2",
+    description: "Some description of task",
     status: false,
   },
   {
     id: "103",
-    title: "My Third Task",
-    description: "Some task description",
+    title: "My Task 3",
+    description: "Some description of task",
     status: false,
   },
 ] as TasksState;
@@ -27,11 +27,22 @@ const defaultState = [
 // Context
 const TaskContext = React.createContext(defaultState);
 
+// Reducer -> Actions context
+const TaskDispatchContext = React.createContext(
+  (() => {}) as Dispatch<TaskAction>
+);
+
 // Provider
 const TaskProvider = ({ children }: { children: React.ReactNode }) => {
-  const tasks: TasksState = defaultState;
+  const [state, dispatch] = useReducer(TaskReducers, defaultState);
 
-  return <TaskContext.Provider value={tasks}>{children}</TaskContext.Provider>;
+  return (
+    <TaskContext.Provider value={state}>
+      <TaskDispatchContext.Provider value={dispatch}>
+        {children}
+      </TaskDispatchContext.Provider>
+    </TaskContext.Provider>
+  );
 };
 
 // Hook for manage the context data
@@ -42,6 +53,54 @@ export const useTasks = () => {
 
   return {
     tasks: context,
+  };
+};
+
+// Reducer -> Actions
+function TaskReducers(state: TasksState, { type, task }: TaskAction) {
+  let existingTask = state[task.id];
+
+  switch (type) {
+    case "add":
+      if (existingTask === undefined) {
+        return [...state, task];
+      }
+
+      return state;
+
+    case "remove":
+      console.log({ task, state });
+      if (existingTask === undefined) {
+        return state;
+      }
+
+      const newState = [...state];
+      delete newState[task.id];
+      return newState;
+
+    default:
+      throw new Error(`Unhandled action type: ${type}`);
+  }
+}
+
+export const useTasksMutations = () => {
+  const dispatch = useContext(TaskDispatchContext);
+
+  const addToTasks = (task: Task) =>
+    dispatch({
+      task,
+      type: "add",
+    });
+
+  const removeFromTask = (task: Task) =>
+    dispatch({
+      task,
+      type: "remove",
+    });
+
+  return {
+    addToTasks,
+    removeFromTask,
   };
 };
 
