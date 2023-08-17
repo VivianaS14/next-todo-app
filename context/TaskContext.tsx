@@ -58,14 +58,14 @@ export const useTasks = () => {
 
 // Reducer -> Actions
 function TaskReducers(state: TasksState, { type, task }: TaskAction) {
-  const existingTask = state.find((tsk) => tsk.id === task.id);
+  let existingTask = state.find((tsk) => tsk.id === task.id);
 
   switch (type) {
     case "add":
       if (existingTask === undefined) {
         return [...state, task];
       }
-      return state;
+      return [...state].map((tsk) => (tsk.id === task.id ? { ...task } : tsk));
 
     case "remove":
       return [...state].filter((tsk) => tsk.id !== task.id);
