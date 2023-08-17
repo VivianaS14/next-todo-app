@@ -65,7 +65,6 @@ function TaskReducers(state: TasksState, { type, task }: TaskAction) {
       if (existingTask === undefined) {
         return [...state, task];
       }
-
       return state;
 
     case "remove":
