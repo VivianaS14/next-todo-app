@@ -16,7 +16,7 @@ export default function Navigation() {
       <div>
         <button
           type="button"
-          className="bg-emerald-300 text-black px-4 py-1 rounded-md"
+          className="bg-emerald-300 hover:bg-emerald-500 text-black px-4 py-1 rounded-md"
           onClick={() => router.push("/new")}
         >
           Add Task

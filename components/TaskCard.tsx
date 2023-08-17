@@ -22,9 +22,12 @@ export default function TaskCard({ task }: Props) {
       className="w-80 mx-auto p-4 bg-cyan-800 rounded-md"
       onClick={() => router.push(`/edit/${id}`)}
     >
-      <div className="flex justify-between">
-        <h1 className="text-lg">{title}</h1>
-        <button className="bg-red-400 px-4 rounded-sm" onClick={handleDelete}>
+      <div className="flex justify-between mb-4">
+        <h1 className="text-lg font-bold">{title}</h1>
+        <button
+          className="bg-red-400 px-4 rounded-sm hover:bg-red-600 "
+          onClick={handleDelete}
+        >
           Delete
         </button>
       </div>
