@@ -1,3 +1,5 @@
+import NewFormPage from "@/app/new/page";
+
 interface Props {
   params: {
     id: string;
@@ -5,9 +7,5 @@ interface Props {
 }
 
 export default function page({ params }: Props) {
-  return (
-    <div>
-      <h1>Editing task {params.id}</h1>
-    </div>
-  );
+  return <NewFormPage paramId={params.id} />;
 }
