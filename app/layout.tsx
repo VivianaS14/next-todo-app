@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 
 import TaskProvider from "@context/TaskContext";
+import Navigation from "@/components/Navigation";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -23,7 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={bricolage.className}>
-        <TaskProvider>{children}</TaskProvider>
+        <TaskProvider>
+          <Navigation />
+          {children}
+        </TaskProvider>
       </body>
     </html>
   );
