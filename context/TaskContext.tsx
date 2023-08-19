@@ -1,28 +1,16 @@
 "use client";
-import React, { Dispatch, useContext, useReducer } from "react";
+import React, { Dispatch, useContext, useEffect, useReducer } from "react";
 import { Task, TaskAction, TasksState } from "..";
 
 // Default state
-const defaultState = [
-  {
-    id: "101",
-    title: "My Task 1",
-    description: "Some description of task",
-    status: false,
-  },
-  {
-    id: "102",
-    title: "My Task 2",
-    description: "Some description of task",
-    status: false,
-  },
-  {
-    id: "103",
-    title: "My Task 3",
-    description: "Some description of task",
-    status: false,
-  },
-] as TasksState;
+let defaultState: TasksState = [];
+
+if (typeof window !== "undefined") {
+  const items = localStorage.getItem("tasks");
+  if (items !== null) {
+    defaultState = JSON.parse(items);
+  }
+}
 
 // Context
 const TaskContext = React.createContext(defaultState);
@@ -35,6 +23,10 @@ const TaskDispatchContext = React.createContext(
 // Provider
 const TaskProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(TaskReducers, defaultState);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(state));
+  }, [state]);
 
   return (
     <TaskContext.Provider value={state}>
